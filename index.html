@@ -1,28 +1,128 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>LJX Website</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        
-        <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="css/font-awesome.css">
-        <link rel="stylesheet" href="css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/templatemo-style.css">
-        <script src="js/vendor/modernizr-2.6.2.min.js"></script>
-    </head>
-    <body>
-        <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
-		<div>hello world</div>
-    
-        
+<html lang="en">
 
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .div1{
+            width: 100px;
+            /* height: 30px; */
+            margin: 0 auto;
+            /* background-color: yellow; */
+        }
+        .div2{
+            width: 100px;
+            height: 30px;
+            margin: 0 auto;
+            margin-top: 30px;
+            /* background-color: yellow; */
+        }
+        #div_videoAttr{
+            width:500px;
+            height:100px;
+            margin: 0 auto;
+            margin-top: 20px;
+            overflow: auto;
+        }
+        #kaiguandeng{
+            text-align: center;
+            line-height: 30px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div><h1>功能1：开光灯</h1></div>
+    <div class="div1">
+        <p id="kaiguandeng">开光灯</p>
+    </div>
+
+    <div class="div1">
+        <img id="lightImage" src="image/closelight.png" style="text-align:center;" title="我是灯">
+        <p id="secret"> </p>
+        <div>
+            <button id="openlight">开灯</button>
+            <button id="closelight">关灯</button>
+        </div>
+    </div>
+
+    <script>
+        var img = document.getElementById('lightImage')
+        var open = document.getElementById('openlight')
+        var close = document.getElementById('closelight')
+        var secret = document.getElementById('secret')
+        open.onclick = function () {
+            img.src = 'image/openlight.png'
+            secret.innerHTML = "ljx加油嘎！"
+        }
+        close.onclick = function () {
+            img.src = 'image/closelight.png'
+        }
+    </script>
+
+    <div class="div2">
+        <input id="video_url" type="text" name="video_url" value="地址">
+        <button id="getVideoAttr">测试</button>
+        <button id="getVideoAttr2">获得属性</button>
+    </div>
+    <div id="div_videoAttr">
+        结果：
+    </div>
+    
+    <script>
+        var video_url = document.getElementById('video_url')
+        var btn_getVideoAttr = document.getElementById('getVideoAttr')
+        var btn_getVideoAttr2 = document.getElementById('getVideoAttr2')
+        var div_videoAttr = document.getElementById('div_videoAttr')
+        // console.log(video_url)
+        btn_getVideoAttr.onclick=function(){
+            video_url.value='1111111111'
+            var xhr = new XMLHttpRequest();//第一步：新建对象
+            xhr.open('GET', 'http://127.0.0.1:8080/zhangsan', true);//第二步：打开连接  将请求参数写在url中 
+            xhr.send();//第三步：发送请求  将请求参数写在URL中
+            /**
+             * 获取数据后的处理程序
+             */
+            xhr.onreadystatechange = function () {
+                var res = xhr.responseText;//获取到json字符串，解析
+                // console.log(res)
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    // console.log("111111111")
+                    var res = xhr.responseText;//获取到json字符串，解析
+                    console.log(res)
+                }
+            };
+        }
+        btn_getVideoAttr2.onclick=function(){
+            // video_url.value='22222'
+            video_url_value = video_url.value
+            var xhr = new XMLHttpRequest();//第一步：新建对象
+            xhr.open('GET', 'http://127.0.0.1:8080/videoattr?videoUrl='+video_url_value, true);//第二步：打开连接  将请求参数写在url中 
+            xhr.send();//第三步：发送请求  将请求参数写在URL中
+            /**
+             * 获取数据后的处理程序
+             */
+            xhr.onreadystatechange = function () {
+                var res = xhr.responseText;//获取到json字符串，解析
+                // console.log(res)
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    // console.log("111111111")
+                    var res = xhr.responseText;//获取到json字符串，解析
+                    console.log(res)
+                    div_videoAttr.innerHTML=res
+                }
+            };
+        }
+    </script>
+
+</body>
+
 </html>
